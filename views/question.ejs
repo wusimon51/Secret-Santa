@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Question for <%= santa.name %></title>
+</head>
+<body>
+    <h2>Enter your question for <%= santa.name %></h2>
+    <form method="POST" action="/santa/<%= santa.id %>">
+        <textarea name="question" id="" cols="30" rows="10"></textarea>
+        <br>
+        <button>Submit</button>
+    </form>
+    <a href="/santa">Back to main page</a>
+</body>
+</html>

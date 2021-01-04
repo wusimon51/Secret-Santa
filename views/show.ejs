@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><%= santa.name %></title>
+</head>
+<body>
+    <h1><%= santa.name %>'s List</h1>
+    <ul>
+        <% for (let item of santa.wishlist) { %>
+            <form method="POST" action="/santa/<%= santa.id %>?_method=PATCH">
+                <li>
+                    <%= item %> <button name="item">Delete</button>
+                </li>
+            </form>
+            <br>
+        <% } %>
+    </ul>
+    <h3>Questions for <%= santa.name %></h3>
+    <ul>
+        <% for (let question of santa.questions) { %>
+            <li>
+                <%= question %>
+            </li>
+        <% } %>
+    </ul>
+    <h3>Add item</h3>
+    <form method="POST" action="/santa/<%= santa.id %>?_method=PATCH">
+        <label for="item">Item name: </label>
+        <input id="item" type="text" name="item" placeholder="item">
+        <button>Add</button>
+    </form>
+    <br>
+    <a href="/santa/<%= santa.id %>/question">Ask a question</a>
+    <a href="/santa">Main page</a>
+</body>
+</html>
