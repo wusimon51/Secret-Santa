@@ -10,36 +10,6 @@ app.use(methodOverride('_method'));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-let santas = [
-    {
-        id: 1,
-        name: 'Simon',
-        target: 'Leon',
-        wishlist: ['beyblade', 'frisbee', 'gundam'],
-        questions: ['what is the meaning of life']
-    },
-    {
-        id: 2,
-        name: 'Leon',
-        target: 'Thomas',
-        wishlist: ['roller', 'hoodie', 'bandana'],
-        questions: []
-    },
-    {
-        id: 3,
-        name: 'Thomas',
-        target: 'Acero',
-        wishlist: ['demon slayer hoodie'],
-        questions: []
-    },
-    {   id: 4,
-        name: 'Acero',
-        target: 'Simon',
-        wishlist: ['girlfriend', 'windows PC'],
-        questions: []
-    }
-];
-
 app.get('/santa', (req, res) => {
     res.render('index', { santas });
 });
