@@ -11,34 +11,28 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 app.get('/santa', (req, res) => {
-    res.render('index', { santas });
+    res.render('index');
 });
 
 app.get('/santa/:id', (req, res) => {
     const { id } = req.params;
-    const santa = santas.find(s => s.id === parseInt(id));
-    res.render('show', { santa });
+    res.render('show');
 });
 
 app.post('/santa/:id', (req, res) => {
     const { id } = req.params;
-    const santa = santas.find(s => s.id === parseInt(id));
     const { question } = req.body;
-    santa.questions.push(question);
-    res.redirect(`/santa/${santa.id}`);
+    res.redirect(`/santa`);
 });
 
 app.patch('/santa/:id', (req, res) => {
     const { id } = req.params;
-    const santa = santas.find(s => s.id === parseInt(id));
-    santa.wishlist.push(req.body.item);
-    res.redirect(`/santa/${santa.id}`);
+    res.redirect(`/santa`);
 });
 
 app.get('/santa/:id/question', (req, res) => {
     const { id } = req.params;
-    const santa = santas.find(s => s.id === parseInt(id));
-    res.render('question', { santa });
+    res.render('question');
 });
 
 app.listen(3000, () => {
