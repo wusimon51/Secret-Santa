@@ -7,13 +7,5 @@
 <body>
     <h1>Secret Santa</h1>
     <h3>Participants</h3>
-    <ul>
-        <% for (let santa of santas) { %>
-            <li>
-                <%= santa.name %>
-                <a href="/santa/<%= santa.id %>">Info</a>
-            </li>
-        <% } %>
-    </ul>
 </body>
 </html>

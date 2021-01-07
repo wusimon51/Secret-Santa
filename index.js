@@ -3,7 +3,7 @@ const app = express();
 const path = require('path');
 const methodOverride = require('method-override');
 
-app.use(express.urlencoded({extended: true }));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(methodOverride('_method'));
 
@@ -34,6 +34,10 @@ app.get('/santa/:id/question', (req, res) => {
     const { id } = req.params;
     res.render('question');
 });
+
+app.get('/signup', (req, res) => {
+
+})
 
 app.listen(3000, () => {
     console.log('on port 3000')
