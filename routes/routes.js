@@ -10,10 +10,8 @@ router.use(express.urlencoded({ extended: true }));
 router.use(express.json());
 router.use(methodOverride('_method'));
 
-router.get('/santa/:id', controller.getUser, (req, res) => {
-    if (req.rows) {
-        console.log(req.rows);
-    }
+router.get('/santa/register', (req, res) => {
+    res.render('register');
 });
 
 router.post('/santa/register', (req, res) => {
@@ -24,5 +22,11 @@ router.post('/santa/register', (req, res) => {
 
     controller.createUser(santa);
 })
+
+router.get('/santa/:id', controller.getUser, (req, res) => {
+    if (req.rows) {
+        console.log(req.rows);
+    }
+});
 
 module.exports = router;

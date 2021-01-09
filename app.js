@@ -18,6 +18,7 @@ connection.connect((err) => {
 
 global.connection = connection;
 
+app.set('view engine', 'ejs');
 app.use('/', routes);
 
 app.listen(3000, () => {
