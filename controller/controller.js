@@ -14,6 +14,10 @@ exports.getUser = (req, res, next) => {
 
 exports.createUser = (user) => {
     const query = 'INSERT INTO users(name, username, password) VALUES ?';
+    const values = [
+        [user.name, user.username, user.password]
+    ];
+
     connection.query(query, [values], function(err, result) {
         if (err) {
             console.log(err);

@@ -16,4 +16,13 @@ router.get('/santa/:id', controller.getUser, (req, res) => {
     }
 });
 
+router.post('/santa/register', (req, res) => {
+    let santa = {};
+    santa.name = req.body.name;
+    santa.username = req.body.username;
+    santa.password = req.body.password;
+
+    controller.createUser(santa);
+})
+
 module.exports = router;
