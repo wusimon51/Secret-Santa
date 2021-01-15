@@ -23,6 +23,10 @@ router.post('/santa/register', (req, res) => {
     controller.createUser(santa);
 })
 
+router.get('/santa/login', (req, res) => {
+    res.render('login');
+})
+
 router.get('/santa/:id', controller.getUser, (req, res) => {
     if (req.rows) {
         console.log(req.rows);
