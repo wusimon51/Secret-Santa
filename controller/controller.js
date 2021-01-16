@@ -16,15 +16,21 @@ exports.createUser = async (user) => {
     })
 }
 
-exports.getUser = (req, res, next) => {
-    const query = 'SELECT name, username, password FROM users WHERE id = ?';
-    let id = req.params.id;
-    connection.query(query, [id], function(err, rows) {
+exports.findUser = (req, res, next) => {
+    const{username, password} = req.body;
+    const query = 'SELECT id, password FROM users WHERE username = ?';
+    connection.query(query, [username], async function(err, result) {
         if (err) {
             console.log(err);
             console.log('error in SELECT user query');
         } else {
-            req.rows = rows;
+            if (result.length === 0) {
+                console.log('No user');
+            } else {
+                const dbPassword = result[0].password;
+                const isValid = await bcrypt.compare(password, dbPassword);
+                req.rows = isValid ? result : undefined;
+            }
             return next();
         }
     })

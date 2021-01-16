@@ -3,6 +3,7 @@ const app = express();
 require('dotenv').config();
 const mysql = require('mysql');
 const routes = require('./routes/routes');
+const session = require('express-session');
 
 const connection = mysql.createConnection({
     host: 'localhost',
@@ -19,6 +20,7 @@ connection.connect((err) => {
 global.connection = connection;
 
 app.set('view engine', 'ejs');
+app.use(session({secret: 'secret'}))
 app.use('/', routes);
 
 app.listen(3000, () => {
