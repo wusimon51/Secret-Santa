@@ -1,4 +1,5 @@
 const bcrypt = require('bcrypt');
+const passport = require('passport');
 
 exports.createUser = async (user) => {
     const query = 'INSERT INTO users(name, username, password) VALUES ?';
@@ -6,7 +7,7 @@ exports.createUser = async (user) => {
         [user.name, user.username, await bcrypt.hash(user.password, 12)]
     ];
 
-    connection.query(query, [values], function(err, result) {
+    connection.query(query, [values], function (err, result) {
         if (err) {
             console.log(err);
             console.log('error in CREATE user query');
@@ -16,22 +17,23 @@ exports.createUser = async (user) => {
     })
 }
 
-exports.findUser = (req, res, next) => {
-    const{username, password} = req.body;
+exports.queryUser = (username, callback) => {
+    console.log('queryUser called in controller');
     const query = 'SELECT id, password FROM users WHERE username = ?';
-    connection.query(query, [username], async function(err, result) {
+    connection.query(query, [username], function (err, result) {
         if (err) {
             console.log(err);
             console.log('error in SELECT user query');
+            return null;
         } else {
             if (result.length === 0) {
                 console.log('No user');
+                return null;
             } else {
-                const dbPassword = result[0].password;
-                const isValid = await bcrypt.compare(password, dbPassword);
-                req.rows = isValid ? result : undefined;
+                console.log('result made in query');
+                const user = result[0];
+                callback(user);
             }
-            return next();
         }
     })
 }

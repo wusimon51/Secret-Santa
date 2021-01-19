@@ -1,14 +1,29 @@
 const express = require('express');
-const path = require('path');
 const methodOverride = require('method-override');
+const passport = require("passport");
 
-let controller = require('../controller/controller');
+const controller = require('../controller/controller');
 
 const router = express.Router();
 
+router.use(passport.initialize());
+router.use(passport.session());
+const initializePassport = require('../passport-config');
+
 router.use(express.urlencoded({ extended: true }));
 router.use(express.json());
+
 router.use(methodOverride('_method'));
+
+initializePassport(passport,
+    (username, callback) => {
+        let user = undefined;
+        controller.queryUser(username, (userResult) => {
+            callback(userResult);
+        })
+        return user;
+    }
+);
 
 router.get('/santa', (req, res) => {
     res.send('This is the home page');
@@ -26,20 +41,15 @@ router.post('/santa/register', (req, res) => {
     controller.createUser(santa);
 
     res.redirect('/santa/login');
-})
+});
 
 router.get('/santa/login', (req, res) => {
     res.render('login');
-})
+});
 
-router.post('/santa/login', controller.findUser, async (req, res) => {
-    const{username, password} = req.body;
-    console.log(req.rows);
-    if (req.rows) {
-        res.redirect('/santa');
-    } else {
-        res.redirect('/santa/login');
-    }
-})
+router.post('/santa/login', passport.authenticate('local', {
+    successRedirect: '/santa',
+    failureRedirect: '/santa/login'
+}));
 
 module.exports = router;
