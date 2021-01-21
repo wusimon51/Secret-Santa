@@ -6,22 +6,17 @@ const controller = require('../controller/controller');
 
 const router = express.Router();
 
-router.use(passport.initialize());
-router.use(passport.session());
 const initializePassport = require('../passport-config');
 
-router.use(express.urlencoded({ extended: true }));
-router.use(express.json());
-
+router.use(express.urlencoded({ extended: false }));
 router.use(methodOverride('_method'));
 
 initializePassport(passport,
     (username, callback) => {
-        let user = undefined;
-        controller.queryUser(username, (userResult) => {
-            callback(userResult);
-        })
-        return user;
+        controller.queryUserByUsername(username).then((user) => callback(user))
+    },
+    (id, callback) => {
+        controller.queryUserById(id).then((user) => callback(user))
     }
 );
 
