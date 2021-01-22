@@ -73,16 +73,16 @@ exports.createEvent = async (event, callback) => {
             console.log(err);
             return err;
         } else {
-            callback(event.adminId, result.insertId);
+            callback(event.adminId, result.insertId, event.name);
             return result.insertId.toString();
         }
     })
 }
 
-exports.addParticipant = (userId, eventId) => {
-    const query = `INSERT INTO participants(user_id, event_id) VALUES ?`;
+exports.addParticipant = (userId, eventId, eventName) => {
+    const query = `INSERT INTO participants(user_id, event_id, event_name) VALUES ?`;
     const values = [
-        [userId, eventId]
+        [userId, eventId, eventName]
     ];
     connection.query(query, [values], function (err, result) {
         if (err) {
@@ -91,6 +91,19 @@ exports.addParticipant = (userId, eventId) => {
             return err;
         } else {
             return result.insertId.toString();
+        }
+    })
+}
+
+exports.getEventsByUserId = (userId, callback) => {
+    const query = 'SELECT * FROM participants WHERE user_id = ?';
+    const values = [[userId]];
+    connection.query(query, [values], function (err, result) {
+        if (err) {
+            console.log('error in SELECT FROM participants query');
+            console.log(err);
+        } else {
+            callback(result);
         }
     })
 }

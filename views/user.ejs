@@ -1,2 +1,5 @@
 <a href="/santa/create-event">Make an event</a>
 <h1>Your Events</h1>
+<% for (let event of events) { %>
+    <a href="/santa/event/<%= event.id %>"><%= event.name %></a>
+<% } %>

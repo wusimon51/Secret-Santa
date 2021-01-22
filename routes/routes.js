@@ -51,8 +51,14 @@ router.post('/santa/login', passport.authenticate('local', {failureRedirect: '/s
     }
 );
 
-router.get('/santa/user/:id', checkAuthenticated, (req, res) => {
-    res.render('user');
+router.get('/santa/user/:id', checkAuthenticated, async (req, res) => {
+    await controller.getEventsByUserId(req.user.id, (result) => {
+        let events = [];
+        for (let event of result) {
+            events.push({name: event.event_name, id: event.event_id});
+        }
+        res.render('user', { events });
+    })
 });
 
 router.get('/santa/create-event', checkAuthenticated, (req, res) => {
@@ -68,6 +74,10 @@ router.post('/santa/create-event', checkAuthenticated, (req, res) => {
 
     controller.createEvent(event, controller.addParticipant);
     res.redirect(`/santa/user/${req.user.id}`);
+})
+
+router.get('/santa/event/:id', checkAuthenticated, (req, res) => {
+    res.render('event');
 })
 
 function checkAuthenticated(req, res, next) {
