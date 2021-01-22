@@ -48,6 +48,7 @@ router.post('/santa/login', passport.authenticate('local', {
 }));
 
 router.get('/santa/user/:id', checkAuthenticated, (req, res) => {
+    console.log('req.user:', req.user);
     res.send(`Hello user + ${req.params.id}`);
 })
 

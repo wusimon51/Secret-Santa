@@ -22,7 +22,11 @@ connection.connect((err) => {
 global.connection = connection;
 
 app.set('view engine', 'ejs');
-app.use(session({secret: 'secret'}))
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false
+}))
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(bodyparser.json());
