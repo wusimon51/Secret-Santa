@@ -52,7 +52,7 @@ exports.queryUserById = (id) => {
     });
 }
 
-exports.createEvent = async (event) => {
+exports.createEvent = async (event, callback) => {
     let optionalCols = '';
     let values = [
         [event.name, event.adminId]
@@ -70,6 +70,23 @@ exports.createEvent = async (event) => {
     connection.query(query, [values], function (err, result) {
         if (err) {
             console.log('error in INSERT INTO events query');
+            console.log(err);
+            return err;
+        } else {
+            callback(event.adminId, result.insertId);
+            return result.insertId.toString();
+        }
+    })
+}
+
+exports.addParticipant = (userId, eventId) => {
+    const query = `INSERT INTO participants(user_id, event_id) VALUES ?`;
+    const values = [
+        [userId, eventId]
+    ];
+    connection.query(query, [values], function (err, result) {
+        if (err) {
+            console.log('error in INSERT INTO participants query');
             console.log(err);
             return err;
         } else {
