@@ -52,12 +52,12 @@ router.post('/santa/login', passport.authenticate('local', {failureRedirect: '/s
 );
 
 router.get('/santa/user/:id', checkAuthenticated, async (req, res) => {
-    await controller.getEventsByUserId(req.user.id, (result) => {
+     await controller.getEventsByUserId(req.user.id, (result) => {
         let events = [];
         for (let event of result) {
             events.push({name: event.event_name, id: event.event_id});
         }
-        res.render('user', { events });
+        res.render('user', { events: events, userId: req.params.id });
     })
 });
 
@@ -74,11 +74,38 @@ router.post('/santa/create-event', checkAuthenticated, (req, res) => {
 
     controller.createEvent(event, controller.addParticipant);
     res.redirect(`/santa/user/${req.user.id}`);
-})
+});
 
 router.get('/santa/event/:id', checkAuthenticated, (req, res) => {
     res.render('event');
-})
+});
+
+router.get('/santa/event/:event_id/invite', checkAuthenticated, (req, res) => {
+    res.render('invite', { userId: req.user.id, eventId: req.params.event_id });
+});
+
+router.post('/santa/event/:event_id/invite', checkAuthenticated, (req, res) => {
+    const invite = {
+        event_id: req.params.event_id,
+        admin_id: req.user.id,
+        username: req.body.username,
+        message: req.body.message
+    }
+    console.log(invite.username);
+    console.log('message:', req.body.message);
+    controller.queryUserByUsername(invite.username).then((user) => {
+        controller.createInvite(user.id, invite);
+        res.redirect(`/santa/event/${req.params.event_id}`);
+    })
+});
+
+router.get('/santa/event/:event_id/:user_id', checkAuthenticated, (req, res) => {
+    res.render('event-user', { userId: req.params.id });
+});
+
+router.post('/santa/event/:event_id/:user_id', checkAuthenticated, (req, res) => {
+
+});
 
 function checkAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {

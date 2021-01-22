@@ -52,15 +52,11 @@ exports.queryUserById = (id) => {
     });
 }
 
-exports.createEvent = async (event, callback) => {
+exports.createEvent = (event, callback) => {
     let optionalCols = '';
     let values = [
         [event.name, event.adminId]
     ];
-    if (event.password !== '') {
-        values[0].push(await bcrypt.hash(event.password, 12));
-        optionalCols += ', password';
-    }
     if (event.budget !== '') {
         values[0].push(parseInt(event.budget));
         optionalCols += ', budget';
@@ -104,6 +100,37 @@ exports.getEventsByUserId = (userId, callback) => {
             console.log(err);
         } else {
             callback(result);
+        }
+    });
+}
+
+exports.getEventByEventId = (eventId) => {
+    return new Promise((resolve, reject) => {
+        const query = 'SELECT * FROM events WHERE event_id = ?';
+        const values = [[eventId]];
+        connection.query(query, [values], function (err, result) {
+            if (err) {
+                console.log('error in SELECT FROM events query');
+                console.log(err);
+                return reject(err);
+            } else {
+                resolve(result[0]);
+            }
+        });
+    });
+}
+
+exports.createInvite = (userId, invite) => {
+    console.log('query called');
+    const query = 'INSERT INTO invites (user_id, admin_id, event_id, message) VALUES ?';
+    const values = [
+        [userId, invite.admin_id, invite.event_id, invite.message]
+    ]
+    connection.query(query, [values], function (err) {
+        if (err) {
+            console.log('error in INSERT INTO invites query');
+            console.log(err);
+            return err;
         }
     })
 }
