@@ -47,4 +47,15 @@ router.post('/santa/login', passport.authenticate('local', {
     failureRedirect: '/santa/login'
 }));
 
+router.get('/santa/user/:id', checkAuthenticated, (req, res) => {
+    res.send(`Hello user + ${req.params.id}`);
+})
+
+function checkAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
+        return next();
+    }
+    res.redirect('/santa/login');
+}
+
 module.exports = router;
