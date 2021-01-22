@@ -67,6 +67,7 @@ router.post('/santa/create-event', checkAuthenticated, (req, res) => {
     event.adminId = req.user.id;
 
     controller.createEvent(event);
+    // controller.addParticipant()
     res.redirect(`/santa/user/${req.user.id}`);
 })
 

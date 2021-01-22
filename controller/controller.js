@@ -52,13 +52,13 @@ exports.queryUserById = (id) => {
     });
 }
 
-exports.createEvent = (event) => {
+exports.createEvent = async (event) => {
     let optionalCols = '';
     let values = [
         [event.name, event.adminId]
     ];
     if (event.password !== '') {
-        values[0].push(event.password);
+        values[0].push(await bcrypt.hash(event.password, 12));
         optionalCols += ', password';
     }
     if (event.budget !== '') {
