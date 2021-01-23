@@ -62,10 +62,28 @@ router.get('/santa/user/:id', checkAuthenticated, async (req, res) => {
     })
     .then((events) => {
         controller.getInvites(req.user.id).then((invites) => {
-            res.render('user', { events: events, userId: req.user.id, invites: invites })
-        })
+            res.render('user', { events: events, userId: req.user.id, invites: invites });
+        });
     })
 });
+
+router.post('/santa/user/:user_id/invite/:invite_id', checkAuthenticated, async (req, res) => {
+    await controller.getInviteByInviteId(req.params.invite_id)
+    .then((invite) => {
+        return parseInt(invite.event_id);
+    })
+    .then((eventId) => {
+        controller.getEventByEventId(eventId)
+        .then((event) => {
+            return [event.id, event.name];
+        })
+        .then((info) => {
+            controller.addParticipant(req.params.user_id, info[0], info[1]);
+            controller.removeInvite(req.params.invite_id);
+            res.redirect(`/santa/user/${req.params.user_id}`);
+        })
+    })
+})
 
 router.get('/santa/create-event', checkAuthenticated, (req, res) => {
     res.render('create-event');

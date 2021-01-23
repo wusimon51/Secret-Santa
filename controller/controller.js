@@ -76,18 +76,20 @@ exports.createEvent = (event, callback) => {
 }
 
 exports.addParticipant = (userId, eventId, eventName) => {
-    const query = `INSERT INTO participants(user_id, event_id, event_name) VALUES ?`;
-    const values = [
-        [userId, eventId, eventName]
-    ];
-    connection.query(query, [values], function (err, result) {
-        if (err) {
-            console.log('error in INSERT INTO participants query');
-            console.log(err);
-            return err;
-        } else {
-            return result.insertId.toString();
-        }
+    return new Promise((resolve, reject) => {
+        const query = `INSERT INTO participants(user_id, event_id, event_name) VALUES ?`;
+        const values = [
+            [userId, eventId, eventName]
+        ];
+        connection.query(query, [values], function (err, result) {
+            if (err) {
+                console.log('error in INSERT INTO participants query');
+                console.log(err);
+                return reject(err);
+            } else {
+                return result.insertId.toString();
+            }
+        })
     })
 }
 
@@ -109,7 +111,7 @@ exports.getEventsByUserId = (userId) => {
 
 exports.getEventByEventId = (eventId) => {
     return new Promise((resolve, reject) => {
-        const query = 'SELECT * FROM events WHERE event_id = ?';
+        const query = 'SELECT * FROM events WHERE id = ?';
         const values = [[eventId]];
         connection.query(query, [values], function (err, result) {
             if (err) {
@@ -141,6 +143,34 @@ exports.getInvites = (userId) => {
     return new Promise((resolve, reject) => {
         const query = 'SELECT * FROM invites WHERE user_id = ?'
         const values = [[userId]]
+        connection.query(query, [values], function (err, result) {
+            if (err) {
+                return reject(err);
+            } else {
+                resolve(result);
+            }
+        })
+    })
+}
+
+exports.getInviteByInviteId = (inviteId) => {
+    return new Promise((resolve, reject) => {
+        const query = 'SELECT * FROM invites WHERE id = ?';
+        const values = [[inviteId]];
+        connection.query(query, [values], function (err, result) {
+            if (err) {
+                return reject(err);
+            } else {
+                resolve(result[0]);
+            }
+        })
+    })
+}
+
+exports.removeInvite = (inviteId) => {
+    return new Promise((resolve, reject) => {
+        const query = 'DELETE FROM invites WHERE id = ?';
+        const values = [[inviteId]];
         connection.query(query, [values], function (err, result) {
             if (err) {
                 return reject(err);
