@@ -7,3 +7,14 @@
     </li>
     <% } %>
 </ul>
+<% if (invites.length !== 0) { %>
+    <h2>Invites</h2>
+    <ul>
+        <% for (let invite of invites) { %>
+            <li>
+                <%= invite.id %>
+                <%= invite.message %>
+            </li>
+        <% } %>
+    </ul>
+<% } %>

@@ -52,12 +52,18 @@ router.post('/santa/login', passport.authenticate('local', {failureRedirect: '/s
 );
 
 router.get('/santa/user/:id', checkAuthenticated, async (req, res) => {
-     await controller.getEventsByUserId(req.user.id, (result) => {
+    await controller.getEventsByUserId(req.user.id)
+    .then((result) => {
         let events = [];
         for (let event of result) {
             events.push({name: event.event_name, id: event.event_id});
         }
-        res.render('user', { events: events, userId: req.params.id });
+        return events;
+    })
+    .then((events) => {
+        controller.getInvites(req.user.id).then((invites) => {
+            res.render('user', { events: events, userId: req.user.id, invites: invites })
+        })
     })
 });
 
