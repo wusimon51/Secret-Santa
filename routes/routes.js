@@ -83,7 +83,7 @@ router.post('/santa/user/:user_id/invite/:invite_id', checkAuthenticated, async 
             res.redirect(`/santa/user/${req.params.user_id}`);
         })
     })
-})
+});
 
 router.get('/santa/create-event', checkAuthenticated, (req, res) => {
     res.render('create-event');
@@ -145,7 +145,7 @@ router.get('/santa/event/:event_id/:user_id', checkAuthenticated, async (req, re
     .then(async (userName) => {
         await controller.getWishlist(req.params.user_id, req.params.event_id)
         .then((result) => {
-            res.render('event-user', { userName: userName, items: result, eventId: req.params.event_id, userId: Number(req.params.user_id), currentUserId: req.user.id });
+            res.render('event-user', { userName: userName, items: result, eventId: req.params.event_id, userId: Number(req.params.user_id), currentUserId: req.user.id});
         })
     })
 });
@@ -162,6 +162,13 @@ router.post('/santa/event/:event_id/:user_id', checkAuthenticated, async (req, r
         res.redirect(`/santa/event/${req.params.event_id}/${req.params.user_id}`)
     });
 });
+
+router.delete('/santa/event/:event_id/:user_id/:item_id/delete', async (req, res) => {
+    await controller.removeItem(req.params.item_id)
+    .then((result) => {
+        res.redirect(`/santa/event/${req.params.event_id}/${req.params.user_id}`);
+    })
+})
 
 function checkAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {

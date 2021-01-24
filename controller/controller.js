@@ -231,3 +231,19 @@ exports.addItem = (item) => {
         })
     })
 }
+
+exports.removeItem = (itemId) => {
+    return new Promise((resolve, reject) => {
+        const query = 'DELETE FROM wishlists WHERE id = ?'
+        const values = [[itemId]];
+        connection.query(query, [values], function (err, result) {
+            if (err) {
+                console.log('error in DELETE FROM wishlists query');
+                console.log(err);
+                return reject(err);
+            } else {
+                resolve(result);
+            }
+        })
+    })
+}
