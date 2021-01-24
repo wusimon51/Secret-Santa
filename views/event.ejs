@@ -1,0 +1,9 @@
+<h1><%= eventName %></h1>
+<h2>Participants</h2>
+<ul>
+    <% for (let participant of participants) { %>
+        <li>
+            <a href="/santa/event/<%= eventId %>/<%= participant.id %>"><%= participant.name %></a>
+        </li>
+    <% } %>
+</ul>

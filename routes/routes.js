@@ -100,8 +100,24 @@ router.post('/santa/create-event', checkAuthenticated, (req, res) => {
     res.redirect(`/santa/user/${req.user.id}`);
 });
 
-router.get('/santa/event/:id', checkAuthenticated, (req, res) => {
-    res.render('event');
+router.get('/santa/event/:id', checkAuthenticated, async (req, res) => {
+    await controller.getParticipantsByEventId(req.params.id)
+    .then((participants) => {
+        let participant_ids = [];
+        for (let participant of participants) {
+            participant_ids.push({ id: participant.user_id, name: '' });
+        }
+        return [participant_ids, participants[0].event_name];
+    })
+    .then(async (eventDetails) => {
+        for (let i = 0; i < eventDetails[0].length; i++) {
+            await controller.queryUserById(eventDetails[0][i].id)
+            .then((user) => {
+                eventDetails[0][i].name = user.name;
+            })
+        }
+        res.render('event', { participants: eventDetails[0], eventName: eventDetails[1], eventId: req.params.id });
+    })
 });
 
 router.get('/santa/event/:event_id/invite', checkAuthenticated, (req, res) => {
@@ -115,8 +131,6 @@ router.post('/santa/event/:event_id/invite', checkAuthenticated, (req, res) => {
         username: req.body.username,
         message: req.body.message
     }
-    console.log(invite.username);
-    console.log('message:', req.body.message);
     controller.queryUserByUsername(invite.username).then((user) => {
         controller.createInvite(user.id, invite);
         res.redirect(`/santa/event/${req.params.event_id}`);

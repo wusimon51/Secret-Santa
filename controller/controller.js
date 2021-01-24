@@ -93,6 +93,22 @@ exports.addParticipant = (userId, eventId, eventName) => {
     })
 }
 
+exports.getParticipantsByEventId = (eventId) => {
+    return new Promise((resolve, reject) => {
+        const query = `SELECT * FROM participants WHERE event_id = ?`;
+        const values = [[eventId]];
+        connection.query(query, [values], function (err, result) {
+            if (err) {
+                console.log('error in SELECT FROM participants query');
+                console.log(err);
+                return reject(err);
+            } else {
+                resolve(result);
+            }
+        })
+    })
+}
+
 exports.getEventsByUserId = (userId) => {
     return new Promise((resolve, reject) => {
         const query = 'SELECT * FROM participants WHERE user_id = ?';
