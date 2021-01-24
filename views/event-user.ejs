@@ -11,6 +11,7 @@
     <% } %>
 </ul>
 <% if (currentUserId === userId) { %>
+    <p>Your recipient is <a href="/santa/event/<%= eventId %>/<%= recipientId %>"><%= recipientName %></a></p>
     <h2>Add item</h2>
     <form action="/santa/event/<%= eventId %>/<%= userId %>" method="post">
         <section>

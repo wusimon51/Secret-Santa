@@ -174,8 +174,34 @@ router.get('/santa/event/:event_id/:user_id', checkAuthenticated, async (req, re
     })
     .then(async (userName) => {
         await controller.getWishlist(req.params.user_id, req.params.event_id)
-        .then((result) => {
-            res.render('event-user', { userName: userName, items: result, eventId: req.params.event_id, userId: Number(req.params.user_id), currentUserId: req.user.id});
+        .then(async (wishlist) => {
+            if (req.user.id === Number(req.params.user_id)) {
+                await controller.getRecipient(req.params.user_id, req.params.event_id)
+                .then(async (recipient) => {
+                    await controller.queryUserById(recipient.recipient_id)
+                    .then((user) => {
+                        const options = {
+                            userName: userName,
+                            items: wishlist,
+                            eventId: req.params.event_id,
+                            userId: Number(req.params.user_id),
+                            currentUserId: req.user.id,
+                            recipientId: recipient.recipient_id,
+                            recipientName: user.name
+                        };
+                        res.render('event-user', options);
+                    })
+                })
+            } else {
+                const options = {
+                    userName: userName,
+                    items: wishlist,
+                    eventId: req.params.event_id,
+                    userId: Number(req.params.user_id),
+                    currentUserId: req.user.id
+                };
+                res.render('event-user', options);
+            }
         })
     })
 });

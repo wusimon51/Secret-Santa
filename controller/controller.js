@@ -279,3 +279,19 @@ exports.addRecipient = (recipientId, participantId, eventId) => {
         })
     })
 }
+
+exports.getRecipient = (userId, eventId) => {
+    return new Promise((resolve, reject) => {
+        const query = 'SELECT * FROM participants WHERE user_id = ? AND event_id = ?'
+        const values = [userId, eventId];
+        connection.query(query, values, function (err, result) {
+            if (err) {
+                console.log('error SELECT FROM participants query');
+                console.log(err);
+                return reject(err);
+            } else {
+                resolve(result[0]);
+            }
+        })
+    })
+}
