@@ -125,6 +125,23 @@ router.get('/santa/event/:id', checkAuthenticated, async (req, res) => {
     })
 });
 
+router.post('/santa/event/:id', checkAuthenticated, async (req, res) => {
+    await controller.startEvent(req.params.id)
+    .then(async (result) => {
+        await controller.getParticipantsByEventId(req.params.id)
+        .then(async (result) => {
+            for (let i = result.length - 1; i >= 1; i--) {
+                let j = Math.floor(Math.random() * (i + 1));
+                let temp = result[j];
+                result[j] = result[i];
+                result[i] = temp;
+            }
+            console.log(result);
+            // await controller.add
+        })
+    })
+})
+
 router.get('/santa/event/:event_id/invite', checkAuthenticated, (req, res) => {
     res.render('invite', { userId: req.user.id, eventId: req.params.event_id });
 });
@@ -168,7 +185,7 @@ router.post('/santa/event/:event_id/:user_id', checkAuthenticated, async (req, r
     });
 });
 
-router.delete('/santa/event/:event_id/:user_id/:item_id/delete', async (req, res) => {
+router.delete('/santa/event/:event_id/:user_id/:item_id/delete', checkAuthenticated, async (req, res) => {
     await controller.removeItem(req.params.item_id)
     .then((result) => {
         res.redirect(`/santa/event/${req.params.event_id}/${req.params.user_id}`);

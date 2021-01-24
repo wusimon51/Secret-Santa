@@ -247,3 +247,35 @@ exports.removeItem = (itemId) => {
         })
     })
 }
+
+exports.startEvent = (eventId) => {
+    return new Promise((resolve, reject) => {
+        const query = 'UPDATE events SET started = ? WHERE id = ?'
+        const values = [1, eventId];
+        connection.query(query, values, function (err, result) {
+            if (err) {
+                console.log('error in UPDATE events query');
+                console.log(err);
+                return reject(err);
+            } else {
+                resolve(result);
+            }
+        })
+    })
+}
+
+exports.addRecipient = (recipientId, participantId) => {
+    return new Promise((resolve, reject) => {
+        const query = 'UPDATE participants SET recipient_id = ? WHERE user_id = ?'
+        const values = [recipientId, participantId];
+        connection.query(query, values, function (err, result) {
+            if (err) {
+                console.log('error in UPDATE participants query');
+                console.log(err);
+                return reject(err);
+            } else {
+                resolve(result);
+            }
+        })
+    })
+}
