@@ -136,8 +136,13 @@ router.post('/santa/event/:id', checkAuthenticated, async (req, res) => {
                 result[j] = result[i];
                 result[i] = temp;
             }
-            console.log(result);
-            // await controller.add
+            for (let i = 0; i < result.length; i++) {
+                if (i === result.length - 1) {
+                    await controller.addRecipient(result[0].user_id, result[i].user_id, req.params.id);
+                } else {
+                    await controller.addRecipient(result[i + 1].user_id, result[i].user_id, req.params.id);
+                }
+            }
         })
     })
 })

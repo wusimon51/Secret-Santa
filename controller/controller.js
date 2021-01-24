@@ -264,10 +264,10 @@ exports.startEvent = (eventId) => {
     })
 }
 
-exports.addRecipient = (recipientId, participantId) => {
+exports.addRecipient = (recipientId, participantId, eventId) => {
     return new Promise((resolve, reject) => {
-        const query = 'UPDATE participants SET recipient_id = ? WHERE user_id = ?'
-        const values = [recipientId, participantId];
+        const query = 'UPDATE participants SET recipient_id = ? WHERE user_id = ? AND event_id = ?'
+        const values = [recipientId, participantId, eventId];
         connection.query(query, values, function (err, result) {
             if (err) {
                 console.log('error in UPDATE participants query');
