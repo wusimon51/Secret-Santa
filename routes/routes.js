@@ -117,11 +117,13 @@ router.get('/santa/event/:id', checkAuthenticated, async (req, res) => {
             })
         }
         let adminId = undefined;
+        let started = undefined;
         await controller.getEventByEventId(req.params.id)
         .then((event) => {
             adminId = event.admin_id;
+            started = event.started[0] === 1;
         })
-        res.render('event', { participants: eventDetails[0], eventName: eventDetails[1], eventId: req.params.id, adminId: Number(adminId), currentUserId: req.user.id });
+        res.render('event', { participants: eventDetails[0], eventName: eventDetails[1], eventId: req.params.id, adminId: Number(adminId), currentUserId: req.user.id, started: started});
     })
 });
 
@@ -143,9 +145,10 @@ router.post('/santa/event/:id', checkAuthenticated, async (req, res) => {
                     await controller.addRecipient(result[i + 1].user_id, result[i].user_id, req.params.id);
                 }
             }
+            res.redirect(`/santa/event/${req.params.id}`);
         })
     })
-})
+});
 
 router.get('/santa/event/:event_id/invite', checkAuthenticated, (req, res) => {
     res.render('invite', { userId: req.user.id, eventId: req.params.event_id });
