@@ -137,12 +137,30 @@ router.post('/santa/event/:event_id/invite', checkAuthenticated, (req, res) => {
     })
 });
 
-router.get('/santa/event/:event_id/:user_id', checkAuthenticated, (req, res) => {
-    res.render('event-user', { userId: req.params.id });
+router.get('/santa/event/:event_id/:user_id', checkAuthenticated, async (req, res) => {
+    await controller.queryUserById(req.params.user_id)
+    .then((user) => {
+        return user.name;
+    })
+    .then(async (userName) => {
+        await controller.getWishlist(req.params.user_id, req.params.event_id)
+        .then((result) => {
+            res.render('event-user', { userName: userName, items: result, eventId: req.params.event_id, userId: Number(req.params.user_id), currentUserId: req.user.id });
+        })
+    })
 });
 
-router.post('/santa/event/:event_id/:user_id', checkAuthenticated, (req, res) => {
-
+router.post('/santa/event/:event_id/:user_id', checkAuthenticated, async (req, res) => {
+    const item = {
+        user_id: req.params.user_id,
+        name: req.body.name,
+        price: req.body.price,
+        event_id: req.params.event_id
+    };
+    await controller.addItem(item)
+    .then((result) => {
+        res.redirect(`/santa/event/${req.params.event_id}/${req.params.user_id}`)
+    });
 });
 
 function checkAuthenticated(req, res, next) {

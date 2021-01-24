@@ -196,3 +196,38 @@ exports.removeInvite = (inviteId) => {
         })
     })
 }
+
+exports.getWishlist = (userId, eventId) => {
+    return new Promise((resolve, reject) => {
+        const query = 'SELECT * FROM wishlists WHERE user_id = ? and event_id = ?';
+        const values = [userId, eventId];
+        connection.query(query, values, function (err, result) {
+            if (err) {
+                return reject(err);
+            } else {
+                resolve(result);
+            }
+        })
+    })
+}
+
+exports.addItem = (item) => {
+    return new Promise((resolve, reject) => {
+        const optionalCol = item.price !== '' ? ', price' : '';
+        const query = `INSERT INTO wishlists(user_id, name${optionalCol}, event_id) VALUES ?`;
+        let values = [[item.user_id, item.name]];
+        if (optionalCol !== '') {
+            values[0].push(item.price);
+        }
+        values[0].push(item.event_id);
+        connection.query(query, [values], function (err, result) {
+            if (err) {
+                console.log('error in INSERT INTO wishlists query');
+                console.log(err);
+                return reject(err);
+            } else {
+                resolve(result);
+            }
+        })
+    })
+}
