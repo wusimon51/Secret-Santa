@@ -7,3 +7,8 @@
         </li>
     <% } %>
 </ul>
+<% if (currentUserId === adminId) { %>
+    <form action="/santa/event/<%= eventId %>" method="post">
+        <button>Assign people</button>
+    </form>
+<% } %>

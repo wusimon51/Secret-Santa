@@ -116,7 +116,12 @@ router.get('/santa/event/:id', checkAuthenticated, async (req, res) => {
                 eventDetails[0][i].name = user.name;
             })
         }
-        res.render('event', { participants: eventDetails[0], eventName: eventDetails[1], eventId: req.params.id });
+        let adminId = undefined;
+        await controller.getEventByEventId(req.params.id)
+        .then((event) => {
+            adminId = event.admin_id;
+        })
+        res.render('event', { participants: eventDetails[0], eventName: eventDetails[1], eventId: req.params.id, adminId: Number(adminId), currentUserId: req.user.id });
     })
 });
 

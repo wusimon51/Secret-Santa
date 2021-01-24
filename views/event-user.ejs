@@ -3,7 +3,6 @@
     <% for (let item of items) { %>
         <li>
             <form action="/santa/event/<%= eventId %>/<%= userId %>/<%= item.id %>/delete?_method=DELETE" method="post">
-                <%= item.id %>
                 <%= item.name %>
                 $<%= item.price %>
                 <button style="background-color: transparent; outline: none; border: none; background-repeat: no-repeat; cursor: pointer;">&times</button>
