@@ -34,14 +34,14 @@ router.post('/register', (req, res) => {
     santa.password = req.body.password;
     controller.createUser(santa);
 
-    res.redirect('/login');
+    res.redirect('/');
 });
 
-router.get('/login', (req, res) => {
-    res.render('login');
+router.get('/', (req, res) => {
+    res.render('index');
 });
 
-router.post('/login', passport.authenticate('local', {failureRedirect: '/login'}),
+router.post('/', passport.authenticate('local', {failureRedirect: '/'}),
     (req, res) => {
         res.redirect(`/user/${req.user.id}`);
     }
@@ -228,14 +228,14 @@ router.delete('/event/:event_id/:user_id/:item_id/delete', checkAuthenticated, a
 
 router.delete('/logout', (req, res) => {
     req.logOut();
-    res.redirect('/login');
+    res.redirect('/');
 });
 
 function checkAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
         return next();
     }
-    res.redirect('/login');
+    res.redirect('/');
 }
 
 module.exports = router;
