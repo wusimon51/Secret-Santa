@@ -2,20 +2,46 @@
     <title>Register</title>
 </head>
 <body>
-    <h2>Registration</h2>
-    <form action="/register" method="post">
-        <section>
-            <label for="name">Your name: </label>
-            <input id="name" type="text" placeholder="Your name" name="name">
-        </section>
-        <section>
-            <label for="username">Username: </label>
-            <input id="username" type="text" placeholder="username" name="username">
-        </section>
-        <section>
-            <label for="password">Password: </label>
-            <input id="password" type="password" placeholder="password" name="password">
-        </section>
-        <button>Create user</button>
-    </form>
+    <div class="container">
+        <form action="/register" method="post">
+            <div class="row mb-3">
+                <div class="col-2"></div>
+                <div class="col-8">
+                    <h2>Registration</h2>
+                </div>
+                <div class="col-2"></div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-2"></div>
+                <div class="col-8">
+                    <label for="name">Your name</label>
+                    <input class="form-control" id="name" type="text" placeholder="Your name" name="name">
+                </div>
+                <div class="col-2"></div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-2"></div>
+                <div class="col-8">
+                    <label for="username">Username</label>
+                    <input class="form-control" id="username" type="text" placeholder="username" name="username">
+                </div>
+                <div class="col-2"></div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-2"></div>
+                <div class="col-8">
+                    <label for="password">Password</label>
+                    <input class="form-control" id="password" type="password" placeholder="password" name="password">
+                </div>
+                <div class="col-2"></div>
+            </div>
+            <div class="row">
+                <div class="col-2"></div>
+                <div class="col-8">
+                    <button type="submit" class="btn btn-primary form-control">Create user</button>
+                </div>
+                <div class="col-2"></div>
+            </div>
+        </form>
+    </div>
 <%- include('partials/footer') %>
