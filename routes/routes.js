@@ -226,6 +226,11 @@ router.delete('/event/:event_id/:user_id/:item_id/delete', checkAuthenticated, a
     })
 })
 
+router.delete('/logout', (req, res) => {
+    req.logOut();
+    res.redirect('/login');
+});
+
 function checkAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
         return next();

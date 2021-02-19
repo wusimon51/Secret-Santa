@@ -1,4 +1,7 @@
 <a href="/create-event">Make an event</a>
+<form action="/logout?_method=DELETE" method="post">
+    <button>Logout</button>
+</form>
 <h1>Your Events</h1>
 <ul>
     <% for (let event of events) { %>
