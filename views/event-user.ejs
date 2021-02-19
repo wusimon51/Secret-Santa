@@ -1,27 +1,31 @@
-<h1><%= userName %>'s Wishlist</h1>
-<ul>
-    <% for (let item of items) { %>
-        <li>
-            <form action="/event/<%= eventId %>/<%= userId %>/<%= item.id %>/delete?_method=DELETE" method="post">
-                <%= item.name %>
-                $<%= item.price %>
-                <button style="background-color: transparent; outline: none; border: none; background-repeat: no-repeat; cursor: pointer;">&times</button>
-            </form>
-        </li>
+<%- include('partials/header') %>
+</head>
+<body>
+    <h1><%= userName %>'s Wishlist</h1>
+    <ul>
+        <% for (let item of items) { %>
+            <li>
+                <form action="/event/<%= eventId %>/<%= userId %>/<%= item.id %>/delete?_method=DELETE" method="post">
+                    <%= item.name %>
+                    $<%= item.price %>
+                    <button style="background-color: transparent; outline: none; border: none; background-repeat: no-repeat; cursor: pointer;">&times</button>
+                </form>
+            </li>
+        <% } %>
+    </ul>
+    <% if (currentUserId === userId) { %>
+        <p>Your recipient is <a href="/event/<%= eventId %>/<%= recipientId %>"><%= recipientName %></a></p>
+        <h2>Add item</h2>
+        <form action="/event/<%= eventId %>/<%= userId %>" method="post">
+            <section>
+                <label for="name">Item name: </label>
+                <input id="name" type="text" placeholder="item name" name="name">
+            </section>
+            <section>
+                <label for="price">Price: </label>
+                <input id="price" type="text" placeholder="price" name="price">
+            </section>
+            <button>Add item</button>
+        </form>
     <% } %>
-</ul>
-<% if (currentUserId === userId) { %>
-    <p>Your recipient is <a href="/event/<%= eventId %>/<%= recipientId %>"><%= recipientName %></a></p>
-    <h2>Add item</h2>
-    <form action="/event/<%= eventId %>/<%= userId %>" method="post">
-        <section>
-            <label for="name">Item name: </label>
-            <input id="name" type="text" placeholder="item name" name="name">
-        </section>
-        <section>
-            <label for="price">Price: </label>
-            <input id="price" type="text" placeholder="price" name="price">
-        </section>
-        <button>Add item</button>
-    </form>
-<% } %>
+<%- include('partials/footer') %>

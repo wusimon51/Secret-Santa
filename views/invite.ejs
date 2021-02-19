@@ -1,13 +1,17 @@
-<h2>Invite user</h2>
-<form action="/event/<%= eventId %>/invite" method="post">
-    <section>
-        <label for="username">Username: </label>
-        <input id="username" type="text" placeholder="username" name="username">
-    </section>
-    <section>
-        <label for="message">Message: </label>
-        <br>
-        <textarea id="message" cols="30" rows="5" placeholder="message" name="message"></textarea>
-    </section>
-    <button>Send Invite</button>
-</form>
+<%- include('partials/header') %>
+</head>
+<body>
+    <h2>Invite user</h2>
+    <form action="/event/<%= eventId %>/invite" method="post">
+        <section>
+            <label for="username">Username: </label>
+            <input id="username" type="text" placeholder="username" name="username">
+        </section>
+        <section>
+            <label for="message">Message: </label>
+            <br>
+            <textarea id="message" cols="30" rows="5" placeholder="message" name="message"></textarea>
+        </section>
+        <button>Send Invite</button>
+    </form>
+<%- include('partials/footer') %>

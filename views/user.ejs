@@ -1,27 +1,32 @@
-<a href="/create-event">Make an event</a>
-<form action="/logout?_method=DELETE" method="post">
-    <button>Logout</button>
-</form>
-<h1>Your Events</h1>
-<ul>
-    <% for (let event of events) { %>
-    <li>
-        <a href="/event/<%= event.id %>/"><%= event.name %></a>
-    </li>
-    <% } %>
-</ul>
-<% if (invites.length !== 0) { %>
-    <h2>Invites</h2>
+<%- include('partials/header') %>
+    <title>Your Events</title>
+</head>
+<body>
+    <a href="/create-event">Make an event</a>
+    <form action="/logout?_method=DELETE" method="post">
+        <button>Logout</button>
+    </form>
+    <h1>Your Events</h1>
     <ul>
-        <% for (let invite of invites) { %>
+        <% for (let event of events) { %>
             <li>
-                <form action="/user/<%= userId %>/invite/<%= invite.id %>" method="post">
-                    <%= invite.id %>
-                    <%= invite.message %>
-                    <button>Accept</button>
-                    <button formaction="/user/<%= userId %>/invite/<%= invite.id %>?_method=DELETE" formmethod="post" type="submit">Decline</button>
-                </form>
+                <a href="/event/<%= event.id %>/"><%= event.name %></a>
             </li>
         <% } %>
     </ul>
-<% } %>
+    <% if (invites.length !== 0) { %>
+        <h2>Invites</h2>
+        <ul>
+            <% for (let invite of invites) { %>
+                <li>
+                    <form action="/user/<%= userId %>/invite/<%= invite.id %>" method="post">
+                        <%= invite.id %>
+                        <%= invite.message %>
+                        <button>Accept</button>
+                        <button formaction="/user/<%= userId %>/invite/<%= invite.id %>?_method=DELETE" formmethod="post" type="submit">Decline</button>
+                    </form>
+                </li>
+            <% } %>
+        </ul>
+    <% } %>
+<%- include('partials/footer') %>

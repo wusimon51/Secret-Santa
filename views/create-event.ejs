@@ -1,16 +1,20 @@
-<h1>Create an Event</h1>
-<form action="/create-event" method="post">
-    <section>
-        <label for="name">Event name: </label>
-        <input id="name" type="text" placeholder="event name" name="name">
-    </section>
-    <section>
-        <label for="budget">Budget: </label>
-        <input id="budget" type="text" placeholder="budget" name="budget">
-    </section>
-    <section>
-        <label for="date">Date</label>
-        <input id="date" type="date" name="date">
-    </section>
-    <button>Create Event</button>
-</form>
+<%- include('partials/header') %>
+</head>
+<body>
+    <h1>Create an Event</h1>
+    <form action="/create-event" method="post">
+        <section>
+            <label for="name">Event name: </label>
+            <input id="name" type="text" placeholder="event name" name="name">
+        </section>
+        <section>
+            <label for="budget">Budget: </label>
+            <input id="budget" type="text" placeholder="budget" name="budget">
+        </section>
+        <section>
+            <label for="date">Date</label>
+            <input id="date" type="date" name="date">
+        </section>
+        <button>Create Event</button>
+    </form>
+<%- include('partials/footer') %>

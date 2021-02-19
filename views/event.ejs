@@ -1,24 +1,28 @@
-<h1><%= eventName %></h1>
-<p>Gift Exchange is on <%= date.getMonth() + 1 %>/<%= date.getDate() %>/<%= date.getFullYear() %></p>
-<h2>Participants</h2>
-<ul>
-    <% for (let participant of participants) { %>
-        <% if (started) { %>
-            <li>
-                <a href="/event/<%= eventId %>/<%= participant.id %>"><%= participant.name %></a>
-            </li>
-        <% } else { %>
-            <li>
-                <%= participant.name %>
-            </li>
+<%- include('partials/header') %>
+</head>
+<body>
+    <h1><%= eventName %></h1>
+    <p>Gift Exchange is on <%= date.getMonth() + 1 %>/<%= date.getDate() %>/<%= date.getFullYear() %></p>
+    <h2>Participants</h2>
+    <ul>
+        <% for (let participant of participants) { %>
+            <% if (started) { %>
+                <li>
+                    <a href="/event/<%= eventId %>/<%= participant.id %>"><%= participant.name %></a>
+                </li>
+            <% } else { %>
+                <li>
+                    <%= participant.name %>
+                </li>
+            <% } %>
+        <% } %>
+    </ul>
+    <% if (currentUserId === adminId) { %>
+        <% if (!started) { %>
+            <a href="/event/<%= eventId %>/invite">Invite people</a>
+            <form action="/event/<%= eventId %>" method="post">
+                <button>Assign people</button>
+            </form>
         <% } %>
     <% } %>
-</ul>
-<% if (currentUserId === adminId) { %>
-    <% if (!started) { %>
-        <a href="/event/<%= eventId %>/invite">Invite people</a>
-        <form action="/event/<%= eventId %>" method="post">
-            <button>Assign people</button>
-        </form>
-    <% } %>
-<% } %>
+<%- include('partials/footer') %>
