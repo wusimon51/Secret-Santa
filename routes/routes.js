@@ -90,6 +90,7 @@ router.post('/create-event', checkAuthenticated, (req, res) => {
     event.name = req.body.name;
     event.password = req.body.password;
     event.budget = req.body.budget;
+    event.date = req.body.date;
     event.adminId = req.user.id;
 
     controller.createEvent(event, controller.addParticipant);
@@ -114,12 +115,14 @@ router.get('/event/:id', checkAuthenticated, async (req, res) => {
         }
         let adminId = undefined;
         let started = undefined;
+        let date = undefined;
         await controller.getEventByEventId(req.params.id)
         .then((event) => {
             adminId = event.admin_id;
             started = event.started[0] === 1;
+            date = event.date;
         })
-        res.render('event', { participants: eventDetails[0], eventName: eventDetails[1], eventId: req.params.id, adminId: Number(adminId), currentUserId: req.user.id, started: started});
+        res.render('event', { participants: eventDetails[0], eventName: eventDetails[1], eventId: req.params.id, adminId: Number(adminId), currentUserId: req.user.id, started: started, date: date});
     })
 });
 

@@ -55,13 +55,13 @@ exports.queryUserById = (id) => {
 exports.createEvent = (event, callback) => {
     let optionalCols = '';
     let values = [
-        [event.name, event.adminId]
+        [event.name, event.adminId, event.date]
     ];
     if (event.budget !== '') {
         values[0].push(parseInt(event.budget));
         optionalCols += ', budget';
     }
-    const query = `INSERT INTO events(name, admin_id${optionalCols}) VALUES ?`;
+    const query = `INSERT INTO events(name, admin_id, date${optionalCols}) VALUES ?`;
 
     connection.query(query, [values], function (err, result) {
         if (err) {
