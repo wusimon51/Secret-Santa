@@ -8,7 +8,7 @@
     <h1><%= santa.name %>'s List</h1>
     <ul>
         <% for (let item of santa.wishlist) { %>
-            <form method="POST" action="/santa/<%= santa.id %>?_method=PATCH">
+            <form method="POST" action="/<%= santa.id %>?_method=PATCH">
                 <li>
                     <%= item %> <button name="item">Delete</button>
                 </li>
@@ -25,13 +25,13 @@
         <% } %>
     </ul>
     <h3>Add item</h3>
-    <form method="POST" action="/santa/<%= santa.id %>?_method=PATCH">
+    <form method="POST" action="/<%= santa.id %>?_method=PATCH">
         <label for="item">Item name: </label>
         <input id="item" type="text" name="item" placeholder="item">
         <button>Add</button>
     </form>
     <br>
-    <a href="/santa/<%= santa.id %>/question">Ask a question</a>
-    <a href="/santa">Main page</a>
+    <a href="/<%= santa.id %>/question">Ask a question</a>
+    <a href="/">Main page</a>
 </body>
 </html>

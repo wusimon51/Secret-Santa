@@ -20,38 +20,34 @@ initializePassport(passport,
 );
 
 router.get('/', (req, res) => {
-    res.redirect('/santa');
-});
-
-router.get('/santa', (req, res) => {
     res.render('index');
 });
 
-router.get('/santa/register', (req, res) => {
+router.get('/register', (req, res) => {
     res.render('register');
 });
 
-router.post('/santa/register', (req, res) => {
+router.post('/register', (req, res) => {
     let santa = {};
     santa.name = req.body.name;
     santa.username = req.body.username;
     santa.password = req.body.password;
     controller.createUser(santa);
 
-    res.redirect('/santa/login');
+    res.redirect('/login');
 });
 
-router.get('/santa/login', (req, res) => {
+router.get('/login', (req, res) => {
     res.render('login');
 });
 
-router.post('/santa/login', passport.authenticate('local', {failureRedirect: '/santa/login'}),
+router.post('/login', passport.authenticate('local', {failureRedirect: '/login'}),
     (req, res) => {
-        res.redirect(`/santa/user/${req.user.id}`);
+        res.redirect(`/user/${req.user.id}`);
     }
 );
 
-router.get('/santa/user/:id', checkAuthenticated, async (req, res) => {
+router.get('/user/:id', checkAuthenticated, async (req, res) => {
     await controller.getEventsByUserId(req.user.id)
     .then((result) => {
         let events = [];
@@ -67,7 +63,7 @@ router.get('/santa/user/:id', checkAuthenticated, async (req, res) => {
     })
 });
 
-router.post('/santa/user/:user_id/invite/:invite_id', checkAuthenticated, async (req, res) => {
+router.post('/user/:user_id/invite/:invite_id', checkAuthenticated, async (req, res) => {
     await controller.getInviteByInviteId(req.params.invite_id)
     .then((invite) => {
         return parseInt(invite.event_id);
@@ -80,16 +76,16 @@ router.post('/santa/user/:user_id/invite/:invite_id', checkAuthenticated, async 
         .then((info) => {
             controller.addParticipant(req.params.user_id, info[0], info[1]);
             controller.removeInvite(req.params.invite_id);
-            res.redirect(`/santa/user/${req.params.user_id}`);
+            res.redirect(`/user/${req.params.user_id}`);
         })
     })
 });
 
-router.get('/santa/create-event', checkAuthenticated, (req, res) => {
+router.get('/create-event', checkAuthenticated, (req, res) => {
     res.render('create-event');
 });
 
-router.post('/santa/create-event', checkAuthenticated, (req, res) => {
+router.post('/create-event', checkAuthenticated, (req, res) => {
     const event = {};
     event.name = req.body.name;
     event.password = req.body.password;
@@ -97,10 +93,10 @@ router.post('/santa/create-event', checkAuthenticated, (req, res) => {
     event.adminId = req.user.id;
 
     controller.createEvent(event, controller.addParticipant);
-    res.redirect(`/santa/user/${req.user.id}`);
+    res.redirect(`/user/${req.user.id}`);
 });
 
-router.get('/santa/event/:id', checkAuthenticated, async (req, res) => {
+router.get('/event/:id', checkAuthenticated, async (req, res) => {
     await controller.getParticipantsByEventId(req.params.id)
     .then((participants) => {
         let participant_ids = [];
@@ -127,11 +123,12 @@ router.get('/santa/event/:id', checkAuthenticated, async (req, res) => {
     })
 });
 
-router.post('/santa/event/:id', checkAuthenticated, async (req, res) => {
+router.post('/event/:id', checkAuthenticated, async (req, res) => {
     await controller.startEvent(req.params.id)
     .then(async (result) => {
         await controller.getParticipantsByEventId(req.params.id)
         .then(async (result) => {
+            // Fisher-Yates shuffling
             for (let i = result.length - 1; i >= 1; i--) {
                 let j = Math.floor(Math.random() * (i + 1));
                 let temp = result[j];
@@ -145,16 +142,16 @@ router.post('/santa/event/:id', checkAuthenticated, async (req, res) => {
                     await controller.addRecipient(result[i + 1].user_id, result[i].user_id, req.params.id);
                 }
             }
-            res.redirect(`/santa/event/${req.params.id}`);
+            res.redirect(`/event/${req.params.id}`);
         })
     })
 });
 
-router.get('/santa/event/:event_id/invite', checkAuthenticated, (req, res) => {
+router.get('/event/:event_id/invite', checkAuthenticated, (req, res) => {
     res.render('invite', { userId: req.user.id, eventId: req.params.event_id });
 });
 
-router.post('/santa/event/:event_id/invite', checkAuthenticated, (req, res) => {
+router.post('/event/:event_id/invite', checkAuthenticated, (req, res) => {
     const invite = {
         event_id: req.params.event_id,
         admin_id: req.user.id,
@@ -163,11 +160,11 @@ router.post('/santa/event/:event_id/invite', checkAuthenticated, (req, res) => {
     }
     controller.queryUserByUsername(invite.username).then((user) => {
         controller.createInvite(user.id, invite);
-        res.redirect(`/santa/event/${req.params.event_id}`);
+        res.redirect(`/event/${req.params.event_id}`);
     })
 });
 
-router.get('/santa/event/:event_id/:user_id', checkAuthenticated, async (req, res) => {
+router.get('/event/:event_id/:user_id', checkAuthenticated, async (req, res) => {
     await controller.queryUserById(req.params.user_id)
     .then((user) => {
         return user.name;
@@ -206,7 +203,7 @@ router.get('/santa/event/:event_id/:user_id', checkAuthenticated, async (req, re
     })
 });
 
-router.post('/santa/event/:event_id/:user_id', checkAuthenticated, async (req, res) => {
+router.post('/event/:event_id/:user_id', checkAuthenticated, async (req, res) => {
     const item = {
         user_id: req.params.user_id,
         name: req.body.name,
@@ -215,14 +212,14 @@ router.post('/santa/event/:event_id/:user_id', checkAuthenticated, async (req, r
     };
     await controller.addItem(item)
     .then((result) => {
-        res.redirect(`/santa/event/${req.params.event_id}/${req.params.user_id}`)
+        res.redirect(`/event/${req.params.event_id}/${req.params.user_id}`)
     });
 });
 
-router.delete('/santa/event/:event_id/:user_id/:item_id/delete', checkAuthenticated, async (req, res) => {
+router.delete('/event/:event_id/:user_id/:item_id/delete', checkAuthenticated, async (req, res) => {
     await controller.removeItem(req.params.item_id)
     .then((result) => {
-        res.redirect(`/santa/event/${req.params.event_id}/${req.params.user_id}`);
+        res.redirect(`/event/${req.params.event_id}/${req.params.user_id}`);
     })
 })
 
@@ -230,7 +227,7 @@ function checkAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
         return next();
     }
-    res.redirect('/santa/login');
+    res.redirect('/login');
 }
 
 module.exports = router;

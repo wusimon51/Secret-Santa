@@ -6,11 +6,11 @@
 </head>
 <body>
     <h2>Enter your question for <%= santa.name %></h2>
-    <form method="POST" action="/santa/<%= santa.id %>">
+    <form method="POST" action="/<%= santa.id %>">
         <textarea name="question" id="" cols="30" rows="10"></textarea>
         <br>
         <button>Submit</button>
     </form>
-    <a href="/santa">Back to main page</a>
+    <a href="/">Back to main page</a>
 </body>
 </html>

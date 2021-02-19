@@ -2,14 +2,21 @@
 <h2>Participants</h2>
 <ul>
     <% for (let participant of participants) { %>
-        <li>
-            <a href="/santa/event/<%= eventId %>/<%= participant.id %>"><%= participant.name %></a>
-        </li>
+        <% if (started) { %>
+            <li>
+                <a href="/event/<%= eventId %>/<%= participant.id %>"><%= participant.name %></a>
+            </li>
+        <% } else { %>
+            <li>
+                <%= participant.name %>
+            </li>
+        <% } %>
     <% } %>
 </ul>
 <% if (currentUserId === adminId) { %>
     <% if (!started) { %>
-        <form action="/santa/event/<%= eventId %>" method="post">
+        <a href="/event/<%= eventId %>/invite">Invite people</a>
+        <form action="/event/<%= eventId %>" method="post">
             <button>Assign people</button>
         </form>
     <% } %>

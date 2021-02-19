@@ -2,7 +2,7 @@
 <ul>
     <% for (let item of items) { %>
         <li>
-            <form action="/santa/event/<%= eventId %>/<%= userId %>/<%= item.id %>/delete?_method=DELETE" method="post">
+            <form action="/event/<%= eventId %>/<%= userId %>/<%= item.id %>/delete?_method=DELETE" method="post">
                 <%= item.name %>
                 $<%= item.price %>
                 <button style="background-color: transparent; outline: none; border: none; background-repeat: no-repeat; cursor: pointer;">&times</button>
@@ -11,9 +11,9 @@
     <% } %>
 </ul>
 <% if (currentUserId === userId) { %>
-    <p>Your recipient is <a href="/santa/event/<%= eventId %>/<%= recipientId %>"><%= recipientName %></a></p>
+    <p>Your recipient is <a href="/event/<%= eventId %>/<%= recipientId %>"><%= recipientName %></a></p>
     <h2>Add item</h2>
-    <form action="/santa/event/<%= eventId %>/<%= userId %>" method="post">
+    <form action="/event/<%= eventId %>/<%= userId %>" method="post">
         <section>
             <label for="name">Item name: </label>
             <input id="name" type="text" placeholder="item name" name="name">

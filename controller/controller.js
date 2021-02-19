@@ -25,7 +25,7 @@ exports.queryUserByUsername = (username) => {
                 return reject(err);
             } else {
                 if (result.length === 0) {
-                    return reject('No user');
+                    return reject('No user in query by username');
                 } else {
                     resolve(result[0]);
                 }
@@ -43,7 +43,7 @@ exports.queryUserById = (id) => {
                 return reject(err);
             } else {
                 if (result.length === 0) {
-                    return reject('No user');
+                    return reject('No user in query by id');
                 } else {
                     resolve(result[0]);
                 }
