@@ -24,28 +24,39 @@
         </div>
     </nav>
     <div class="container">
-        <h1 class="display-2 text-center">Your Events</h1>
-        <ul>
-            <% for (let event of events) { %>
-                <li>
-                    <a href="/event/<%= event.id %>/"><%= event.name %></a>
-                </li>
-            <% } %>
-        </ul>
-        <% if (invites.length !== 0) { %>
-            <h2>Invites</h2>
-            <ul>
-                <% for (let invite of invites) { %>
-                    <li>
-                        <form action="/user/<%= userId %>/invite/<%= invite.id %>" method="post">
-                            <%= invite.id %>
-                            <%= invite.message %>
-                            <button>Accept</button>
-                            <button formaction="/user/<%= userId %>/invite/<%= invite.id %>?_method=DELETE" formmethod="post" type="submit">Decline</button>
-                        </form>
-                    </li>
+        <h1 class="display-2 text-center">Hello there</h1>
+        <div class="row">
+            <div class="col-6">
+                <h1 class="display-4">Your Events</h1>
+                <ul>
+                    <% for (let event of events) { %>
+                        <li>
+                            <a href="/event/<%= event.id %>/"><%= event.name %></a>
+                        </li>
+                    <% } %>
+                </ul>
+            </div>
+            <div class="col-6">
+                <h1 class="display-4">Invites</h1>
+                <% if (invites.length !== 0) { %>
+                    <ul>
+                        <% for (let invite of invites) { %>
+                            <li>
+                                <form action="/user/<%= userId %>/invite/<%= invite.id %>" method="post">
+                                    <%= invite.id %>
+                                    <%= invite.message %>
+                                    <button class="btn btn-success">Accept</button>
+                                    <button class="btn btn-danger" formaction="/user/<%= userId %>/invite/<%= invite.id %>?_method=DELETE" formmethod="post" type="submit">
+                                        Decline
+                                    </button>
+                                </form>
+                            </li>
+                        <% } %>
+                    </ul>
+                <% } else { %>
+                    <h1>No invites</h1>
                 <% } %>
-            </ul>
-        <% } %>
+            </div>
+        </div>
     </div>
 <%- include('partials/footer') %>
