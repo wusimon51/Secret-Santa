@@ -22,12 +22,11 @@
             </div>
         </div>
     </nav>
-
     <div class="container">
         <% if (currentUserId === userId) { %>
-            <h1>Your Wishlist</h1>
+            <h1 class="display-2 text-center">Your Wishlist</h1>
         <% } else { %>
-            <h1><%= userName %>'s Wishlist</h1>
+            <h1 class="display-2 text-center"><%= userName %>'s Wishlist</h1>
         <% } %>
         <ul>
             <% for (let item of items) { %>
@@ -36,26 +35,34 @@
                           method="post">
                         <%= item.name %>
                         $<%= item.price %>
-                        <button style="background-color: transparent; outline: none; border: none; background-repeat: no-repeat; cursor: pointer;">
-                            &times
-                        </button>
+                        <button type="submit" class="btn-close" aria-label="Close"></button>
                     </form>
                 </li>
             <% } %>
         </ul>
         <% if (currentUserId === userId) { %>
-            <p>Your recipient is <a href="/event/<%= eventId %>/<%= recipientId %>"><%= recipientName %></a></p>
+            <h2>Your recipient is <a href="/event/<%= eventId %>/<%= recipientId %>"><%= recipientName %></a></h2>
             <h2>Add item</h2>
             <form action="/event/<%= eventId %>/<%= userId %>" method="post">
-                <section>
-                    <label for="name">Item name: </label>
-                    <input id="name" type="text" placeholder="item name" name="name">
-                </section>
-                <section>
-                    <label for="price">Price: </label>
-                    <input id="price" type="text" placeholder="price" name="price">
-                </section>
-                <button>Add item</button>
+                <div class="row mb-3">
+                    <div class="col-3">
+                        <label for="name">Item name</label>
+                        <input class="form-control" id="name" type="text" placeholder="item name" name="name">
+                    </div>
+                    <div class="col-3"></div>
+                    <div class="col-3"></div>
+                    <div class="col-3"></div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-3">
+                        <label for="price">Price</label>
+                        <input class="form-control" id="price" type="number" placeholder="price" name="price">
+                    </div>
+                    <div class="col-3"></div>
+                    <div class="col-3"></div>
+                    <div class="col-3"></div>
+                </div>
+                <button class="btn btn-primary">Add item</button>
             </form>
         <% } %>
     </div>
