@@ -1,17 +1,59 @@
 <%- include('partials/header') %>
 </head>
 <body>
-    <h2>Invite user</h2>
-    <form action="/event/<%= eventId %>/invite" method="post">
-        <section>
-            <label for="username">Username: </label>
-            <input id="username" type="text" placeholder="username" name="username">
-        </section>
-        <section>
-            <label for="message">Message: </label>
-            <br>
-            <textarea id="message" cols="30" rows="5" placeholder="message" name="message"></textarea>
-        </section>
-        <button>Send Invite</button>
-    </form>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Secret Santa</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="/user/<%= userId %>">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/create-event">Create Event</a>
+                    </li>
+                </ul>
+                <form class="d-flex ms-auto" action="/logout?_method=DELETE" method="post">
+                    <button class="btn text-light" type="submit">Logout</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <form action="/event/<%= eventId %>/invite" method="post">
+            <div class="row">
+                <div class="col-2"></div>
+                <div class="col-8">
+                    <h2>Invite user</h2>
+                </div>
+                <div class="col-2"></div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-2"></div>
+                <div class="col-8">
+                    <label for="username">Username</label>
+                    <input class="form-control" id="username" type="text" placeholder="username" name="username">
+                </div>
+                <div class="col-2"></div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-2"></div>
+                <div class="col-8">
+                    <label for="message">Message</label>
+                    <textarea class="form-control" id="message" cols="30" rows="5" placeholder="message" name="message"></textarea>
+                </div>
+                <div class="col-2"></div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-2"></div>
+                <div class="col-8">
+                    <button class="btn btn-primary">Send Invite</button>
+                </div>
+                <div class="col-2"></div>
+            </div>
+        </form>
+    </div>
 <%- include('partials/footer') %>
