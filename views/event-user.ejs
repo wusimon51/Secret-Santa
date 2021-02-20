@@ -28,42 +28,49 @@
         <% } else { %>
             <h1 class="display-2 text-center"><%= userName %>'s Wishlist</h1>
         <% } %>
-        <ul>
-            <% for (let item of items) { %>
-                <li>
-                    <form action="/event/<%= eventId %>/<%= userId %>/<%= item.id %>/delete?_method=DELETE"
-                          method="post">
-                        <%= item.name %>
-                        $<%= item.price %>
-                        <button type="submit" class="btn-close" aria-label="Close"></button>
-                    </form>
-                </li>
-            <% } %>
-        </ul>
+        <div class="row">
+            <div class="col-3">
+                <ul class="list-group" style="font-size: 20px">
+                    <% for (let item of items) { %>
+                        <li class="list-group-item">
+                            <form action="/event/<%= eventId %>/<%= userId %>/<%= item.id %>/delete?_method=DELETE"
+                                  method="post">
+                                <%= item.name %>
+                                $<%= item.price %>
+                                <button type="submit" class="btn-close" aria-label="Close"></button>
+                            </form>
+                        </li>
+                    <% } %>
+                </ul>
+            </div>
+            <div class="col-3"></div>
+            <div class="col-3"></div>
+            <div class="col-3"></div>
+        </div>
         <% if (currentUserId === userId) { %>
             <h2>Your recipient is <a href="/event/<%= eventId %>/<%= recipientId %>"><%= recipientName %></a></h2>
-            <h2>Add item</h2>
-            <form action="/event/<%= eventId %>/<%= userId %>" method="post">
-                <div class="row mb-3">
-                    <div class="col-3">
-                        <label for="name">Item name</label>
-                        <input class="form-control" id="name" type="text" placeholder="item name" name="name">
-                    </div>
-                    <div class="col-3"></div>
-                    <div class="col-3"></div>
-                    <div class="col-3"></div>
+            <div class="row">
+                <div class="col-4 border rounded border-primary shadow">
+                    <h2>Add item</h2>
+                    <form action="/event/<%= eventId %>/<%= userId %>" method="post">
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label for="name">Item name</label>
+                                <input class="form-control" id="name" type="text" placeholder="item name" name="name">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label for="price">Price</label>
+                                <input class="form-control" id="price" type="number" placeholder="price" name="price">
+                            </div>
+                        </div>
+                        <button class="btn btn-primary mb-3">Add item</button>
+                    </form>
                 </div>
-                <div class="row mb-3">
-                    <div class="col-3">
-                        <label for="price">Price</label>
-                        <input class="form-control" id="price" type="number" placeholder="price" name="price">
-                    </div>
-                    <div class="col-3"></div>
-                    <div class="col-3"></div>
-                    <div class="col-3"></div>
-                </div>
-                <button class="btn btn-primary">Add item</button>
-            </form>
+                <div class="col-4"></div>
+                <div class="col-4"></div>
+            </div>
         <% } %>
     </div>
 <%- include('partials/footer') %>
