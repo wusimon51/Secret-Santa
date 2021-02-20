@@ -25,20 +25,35 @@
     <div class="container">
         <h1 class="display-2 text-center"><%= eventName %></h1>
         <h1 class="display-5">Gift Exchange is on: <%= date.getMonth() + 1 %>/<%= date.getDate() %>/<%= date.getFullYear() %></h1>
-        <h2>Participants</h2>
-        <ul>
-            <% for (let participant of participants) { %>
-                <% if (started) { %>
-                    <li>
-                        <a href="/event/<%= eventId %>/<%= participant.id %>"><%= participant.name %></a>
-                    </li>
-                <% } else { %>
-                    <li>
-                        <%= participant.name %>
-                    </li>
-                <% } %>
+        <h1 class="display-5">
+            Budget:
+            <% if (budget !== null) { %>
+                $<%= budget %>
+            <% } else { %>
+                None
             <% } %>
-        </ul>
+        </h1>
+        <h2>Participants</h2>
+        <div class="row">
+            <div class="col-3">
+                <ul class="list-group list-group-flush border border-dark shadow rounded">
+                    <% for (let participant of participants) { %>
+                        <% if (started) { %>
+                            <li class="list-group-item">
+                                <a href="/event/<%= eventId %>/<%= participant.id %>"><%= participant.name %></a>
+                            </li>
+                        <% } else { %>
+                            <li class="list-group-item">
+                                <%= participant.name %>
+                            </li>
+                        <% } %>
+                    <% } %>
+                </ul>
+            </div>
+            <div class="col-3"></div>
+            <div class="col-3"></div>
+            <div class="col-3"></div>
+        </div>
         <% if (currentUserId === adminId) { %>
             <% if (!started) { %>
                 <a href="/event/<%= eventId %>/invite">Invite people</a>
