@@ -1,20 +1,67 @@
 <%- include('partials/header') %>
 </head>
 <body>
-    <h1>Create an Event</h1>
-    <form action="/create-event" method="post">
-        <section>
-            <label for="name">Event name: </label>
-            <input id="name" type="text" placeholder="event name" name="name">
-        </section>
-        <section>
-            <label for="budget">Budget: </label>
-            <input id="budget" type="text" placeholder="budget" name="budget">
-        </section>
-        <section>
-            <label for="date">Date</label>
-            <input id="date" type="date" name="date">
-        </section>
-        <button>Create Event</button>
-    </form>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Secret Santa</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="/user/<%= userId %>">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/create-event">Create Event</a>
+                    </li>
+                </ul>
+                <form class="d-flex ms-auto" action="/logout?_method=DELETE" method="post">
+                    <button class="btn btn-outline-light" type="submit">Logout</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <form action="/create-event" method="post">
+            <div class="row">
+                <div class="col-2"></div>
+                <div class="col-8">
+                    <h2>Create an Event</h2>
+                </div>
+                <div class="col-2"></div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-2"></div>
+                <div class="col-8">
+                    <label for="name">Event name</label>
+                    <input class="form-control" id="name" type="text" placeholder="event name" name="name">
+                </div>
+                <div class="col-2"></div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-2"></div>
+                <div class="col-8">
+                    <div class="row">
+                        <div class="col-6">
+                            <label for="budget">Budget</label>
+                            <input class="form-control" id="budget" type="text" placeholder="budget" name="budget">
+                        </div>
+                        <div class="col-6">
+                            <label for="date">Date</label>
+                            <input class="form-control" id="date" type="date" name="date">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-2"></div>
+            </div>
+            <div class="row">
+                <div class="col-2"></div>
+                <div class="col-8">
+                    <button class="btn btn-primary">Create Event</button>
+                </div>
+                <div class="col-2"></div>
+            </div>
+        </form>
+    </div>
 <%- include('partials/footer') %>

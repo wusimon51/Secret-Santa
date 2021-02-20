@@ -2,31 +2,50 @@
     <title>Your Events</title>
 </head>
 <body>
-    <a href="/create-event">Make an event</a>
-    <form action="/logout?_method=DELETE" method="post">
-        <button>Logout</button>
-    </form>
-    <h1>Your Events</h1>
-    <ul>
-        <% for (let event of events) { %>
-            <li>
-                <a href="/event/<%= event.id %>/"><%= event.name %></a>
-            </li>
-        <% } %>
-    </ul>
-    <% if (invites.length !== 0) { %>
-        <h2>Invites</h2>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Secret Santa</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/user/<%= userId %>">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/create-event">Create Event</a>
+                    </li>
+                </ul>
+                <form class="d-flex ms-auto" action="/logout?_method=DELETE" method="post">
+                    <button class="btn text-light">Logout</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <h1>Your Events</h1>
         <ul>
-            <% for (let invite of invites) { %>
+            <% for (let event of events) { %>
                 <li>
-                    <form action="/user/<%= userId %>/invite/<%= invite.id %>" method="post">
-                        <%= invite.id %>
-                        <%= invite.message %>
-                        <button>Accept</button>
-                        <button formaction="/user/<%= userId %>/invite/<%= invite.id %>?_method=DELETE" formmethod="post" type="submit">Decline</button>
-                    </form>
+                    <a href="/event/<%= event.id %>/"><%= event.name %></a>
                 </li>
             <% } %>
         </ul>
-    <% } %>
+        <% if (invites.length !== 0) { %>
+            <h2>Invites</h2>
+            <ul>
+                <% for (let invite of invites) { %>
+                    <li>
+                        <form action="/user/<%= userId %>/invite/<%= invite.id %>" method="post">
+                            <%= invite.id %>
+                            <%= invite.message %>
+                            <button>Accept</button>
+                            <button formaction="/user/<%= userId %>/invite/<%= invite.id %>?_method=DELETE" formmethod="post" type="submit">Decline</button>
+                        </form>
+                    </li>
+                <% } %>
+            </ul>
+        <% } %>
+    </div>
 <%- include('partials/footer') %>

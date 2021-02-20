@@ -82,7 +82,7 @@ router.post('/user/:user_id/invite/:invite_id', checkAuthenticated, async (req, 
 });
 
 router.get('/create-event', checkAuthenticated, (req, res) => {
-    res.render('create-event');
+    res.render('create-event', {userId: req.user.id});
 });
 
 router.post('/create-event', checkAuthenticated, (req, res) => {
