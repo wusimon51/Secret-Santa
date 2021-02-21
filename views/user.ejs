@@ -49,7 +49,7 @@
                                         <% if (invite.message !== "") { %>
                                             <p class="card-text"><%= invite.message %></p>
                                         <% } %>
-                                        <p class="card-text">Sent by <%= invite. userName%></p>
+                                        <p class="card-text">Sent by <%= invite.userName %></p>
                                         <form action="/user/<%= userId %>/invite/<%= invite.id %>" method="post">
                                             <button class="btn btn-success" type="submit">Accept</button>
                                             <button class="btn btn-danger" formaction="/user/<%= userId %>/invite/<%= invite.id %>?_method=DELETE" formmethod="post" type="submit">
