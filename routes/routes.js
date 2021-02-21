@@ -57,8 +57,24 @@ router.get('/user/:id', checkAuthenticated, async (req, res) => {
         return events;
     })
     .then((events) => {
-        controller.getInvites(req.user.id).then((invites) => {
-            res.render('user', { events: events, userId: req.user.id, invites: invites });
+        let invitesList = [];
+        let inviteObj = undefined;
+        controller.getInvites(req.user.id).then(async (invites) => {
+            for (let invite of invites) {
+                inviteObj = {id: invite.id};
+                await controller.getEventByEventId(invite.event_id).then(async (event) => {
+                    inviteObj.eventName = event.name;
+                    inviteObj.message = invite.message;
+                    await controller.queryUserById(event.admin_id).then((user) => {
+                        return user.name;
+                    })
+                    .then((userName) => {
+                        inviteObj.userName = userName;
+                    })
+                    invitesList.push(inviteObj)
+                })
+            }
+            res.render('user', { events: events, userId: req.user.id, invites: invitesList });
         });
     })
 });
