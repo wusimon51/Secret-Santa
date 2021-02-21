@@ -34,12 +34,17 @@
                 <ul class="list-group" style="font-size: 20px">
                     <% for (let item of items) { %>
                         <li class="list-group-item">
-                            <form action="/event/<%= eventId %>/<%= userId %>/<%= item.id %>/delete?_method=DELETE"
-                                  method="post">
+                            <% if (currentUserId === userId ) { %>
+                                <form action="/event/<%= eventId %>/<%= userId %>/<%= item.id %>/delete?_method=DELETE"
+                                      method="post">
+                                    <%= item.name %>
+                                    $<%= item.price %>
+                                    <button type="submit" class="btn-close" aria-label="Close"></button>
+                                </form>
+                            <% } else { %>
                                 <%= item.name %>
                                 $<%= item.price %>
-                                <button type="submit" class="btn-close" aria-label="Close"></button>
-                            </form>
+                            <% } %>
                         </li>
                     <% } %>
                 </ul>
