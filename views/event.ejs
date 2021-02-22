@@ -1,8 +1,8 @@
 <%- include('partials/header') %>
     <title>Event</title>
 </head>
-<body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+<body style="background-color: #F7F7FF">
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #FB3640;">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">Secret Santa</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -37,7 +37,7 @@
         <h2>Participants</h2>
         <div class="row mb-3">
             <div class="col-3">
-                <ul class="list-group list-group-flush border border-dark shadow rounded">
+                <ul class="list-group list-group-flush border border-success shadow rounded">
                     <% for (let participant of participants) { %>
                         <% if (started) { %>
                             <li class="list-group-item">

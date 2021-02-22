@@ -1,8 +1,8 @@
 <%- include('partials/header') %>
     <title>Your Events</title>
 </head>
-<body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+<body style="background-color: #F7F7FF">
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #FB3640;">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">Secret Santa</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -26,9 +26,9 @@
     <div class="container">
         <h1 class="display-2 text-center">Hello there</h1>
         <div class="row">
-            <div class="col-3">
+            <div class="col-5">
                 <h1 class="display-4">Your Events</h1>
-                <ul class="list-group list-group-flush border rounded border-dark shadow">
+                <ul class="list-group list-group-flush border border-success rounded shadow">
                     <% for (let event of events) { %>
                         <li class="list-group-item">
                             <a href="/event/<%= event.id %>/"><%= event.name %></a>
@@ -36,14 +36,14 @@
                     <% } %>
                 </ul>
             </div>
-            <div class="col-3"></div>
-            <div class="col-6">
+            <div class="col-2"></div>
+            <div class="col-5">
                 <h1 class="display-4">Your Invites</h1>
                 <div class="row">
                     <% if (invites.length !== 0) { %>
                         <ul>
                             <% for (let invite of invites) { %>
-                                <div class="card mb-3 border border-dark rounded shadow" style="width: 18rem;">
+                                <div class="card mb-3 border border-success rounded shadow" style="width: 18rem;">
                                     <div class="card-body">
                                         <h5 class="card-title"><%= invite.eventName %></h5>
                                         <% if (invite.message !== "") { %>

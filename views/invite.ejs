@@ -1,8 +1,8 @@
 <%- include('partials/header') %>
     <title>Invite</title>
 </head>
-<body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+<body style="background-color: #F7F7FF">
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #FB3640;">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">Secret Santa</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -25,7 +25,7 @@
     </nav>
     <div class="container">
         <form action="/event/<%= eventId %>/invite" method="post">
-            <div class="row">
+            <div class="row mt-3">
                 <div class="col-2"></div>
                 <div class="col-8">
                     <h2>Invite user</h2>

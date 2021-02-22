@@ -1,8 +1,8 @@
 <%- include('partials/header') %>
     <title>Wishlist</title>
 </head>
-<body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+<body style="background-color: #F7F7FF">
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #FB3640;">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">Secret Santa</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -31,8 +31,8 @@
             <h2><%= userName %>'s Wishlist</h2>
         <% } %>
         <div class="row mb-3">
-            <div class="col-3">
-                <ul class="list-group list-group-flush border border-primary rounded shadow" style="font-size: 20px">
+            <div class="col-4">
+                <ul class="list-group list-group-flush border border-success rounded shadow" style="font-size: 20px">
                     <% for (let item of items) { %>
                         <li class="list-group-item">
                             <% if (currentUserId === userId ) { %>
@@ -50,15 +50,14 @@
                     <% } %>
                 </ul>
             </div>
-            <div class="col-3"></div>
-            <div class="col-3"></div>
-            <div class="col-3"></div>
+            <div class="col-4"></div>
+            <div class="col-4"></div>
         </div>
 
         <% if (currentUserId === userId) { %>
             <div class="row">
                 <h2>Your recipient is <a href="/event/<%= eventId %>/<%= recipientId %>"><%= recipientName %></a></h2>
-                <div class="col-4 border rounded border-primary shadow">
+                <div class="col-4 border rounded border-success shadow" style="background-color: #FFFFFF;">
                     <h2>Add item</h2>
                     <form action="/event/<%= eventId %>/<%= userId %>" method="post">
                         <div class="row mb-3">
@@ -74,7 +73,7 @@
                                 <input class="form-control" id="price" type="number" placeholder="price" name="price">
                             </div>
                         </div>
-                        <button class="btn btn-primary mb-3">Add item</button>
+                        <button class="btn text-light mb-3" style="background-color: #FB3640;">Add item</button>
                     </form>
                 </div>
             </div>
