@@ -51,12 +51,7 @@
                 </ul>
             </div>
             <div class="col-4"></div>
-            <div class="col-4"></div>
-        </div>
-
-        <% if (currentUserId === userId) { %>
-            <div class="row">
-                <h2>Your recipient is <a href="/event/<%= eventId %>/<%= recipientId %>"><%= recipientName %></a></h2>
+            <% if (currentUserId === userId) { %>
                 <div class="col-4 border rounded border-success shadow" style="background-color: #FFFFFF;">
                     <h2>Add item</h2>
                     <form action="/event/<%= eventId %>/<%= userId %>" method="post">
@@ -76,6 +71,11 @@
                         <button class="btn text-light mb-3" style="background-color: #FB3640;">Add item</button>
                     </form>
                 </div>
+            <% } %>
+        </div>
+        <% if (currentUserId === userId) { %>
+            <div class="row">
+                <h2>Your recipient is <a href="/event/<%= eventId %>/<%= recipientId %>"><%= recipientName %></a></h2>
             </div>
         <% } %>
     </div>
