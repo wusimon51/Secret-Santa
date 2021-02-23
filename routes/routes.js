@@ -186,6 +186,9 @@ router.post('/event/:event_id/invite', checkAuthenticated, (req, res) => {
     controller.queryUserByUsername(invite.username).then((user) => {
         controller.createInvite(user.id, invite);
         res.redirect(`/event/${req.params.event_id}`);
+    }).catch((e) => {
+        req.flash('warning', 'Username does not exist');
+        res.redirect(`/event/${req.params.event_id}/invite`);
     })
 });
 
