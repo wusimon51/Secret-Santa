@@ -6,17 +6,18 @@ function initialize(passport, getUserByUsername, getUserById) {
         await getUserByUsername(username, async (result) => {
             const user = result;
             if (user === null) {
-                return done(null, false);
+                return done(null, false, { message: 'Your username or password is incorrect' });
             }
 
+            // check password
             try {
                 if (await bcrypt.compare(password, user.password)) {
                     return done(null, user);
                 } else {
-                    return done(null, false);
+                    return done(null, false, { message: 'Your username or password is incorrect' });
                 }
             } catch (e) {
-                return done(e);
+                return done(null, false);
             }
         })
     }

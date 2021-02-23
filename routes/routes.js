@@ -1,6 +1,7 @@
 const express = require('express');
 const methodOverride = require('method-override');
 const passport = require("passport");
+const flash = require('express-flash');
 
 const controller = require('../controller/controller');
 const initializePassport = require('../passport-config');
@@ -9,10 +10,13 @@ const router = express.Router();
 
 router.use(express.urlencoded({ extended: false }));
 router.use(methodOverride('_method'));
+router.use(flash());
 
 initializePassport(passport,
     (username, callback) => {
-        controller.queryUserByUsername(username).then((user) => callback(user))
+        controller.queryUserByUsername(username).then((user) => callback(user)).catch((e) => {
+            callback(null);
+        })
     },
     (id, callback) => {
         controller.queryUserById(id).then((user) => callback(user))
@@ -41,7 +45,7 @@ router.get('/', (req, res) => {
     res.render('index');
 });
 
-router.post('/', passport.authenticate('local', {failureRedirect: '/'}),
+router.post('/', passport.authenticate('local', {failureRedirect: '/', failureFlash: true}),
     (req, res) => {
         res.redirect(`/user/${req.user.id}`);
     }
