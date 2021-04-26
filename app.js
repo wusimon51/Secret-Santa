@@ -9,8 +9,8 @@ const bodyparser = require('body-parser');
 const methodOverride = require('method-override');
 
 const connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
+    host: process.env.DATABASE_HOST,
+    user: process.env.DATABASE_USER,
     password: process.env.DB_PASSWORD,
     database: 'mydb'
 });
