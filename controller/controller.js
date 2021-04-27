@@ -58,7 +58,7 @@ exports.createEvent = (event, callback) => {
         [event.name, event.adminId, event.date]
     ];
     if (event.budget !== '') {
-        values[0].push(parseInt(event.budget));
+        values[0].push(parseFloat(event.budget));
         optionalCols += ', budget';
     }
     const query = `INSERT INTO events(name, admin_id, date${optionalCols}) VALUES ?`;

@@ -112,7 +112,6 @@ router.post('/create-event', checkAuthenticated, (req, res) => {
     event.budget = req.body.budget;
     event.date = req.body.date;
     event.adminId = req.user.id;
-
     controller.createEvent(event, controller.addParticipant);
     res.redirect(`/user/${req.user.id}`);
 });
