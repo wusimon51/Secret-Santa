@@ -1,4 +1,4 @@
 # Secret-Santa
 A website for organizing Secret Santa events.
 
-[Link](secret-santa-hriys.ondigitalocean.app)
+[Link](http://secret-santa-hriys.ondigitalocean.app)
