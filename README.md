@@ -1,2 +1,2 @@
 # Secret-Santa
-A website for organizing Secret Santa events.
+A web app for organizing Secret Santa events.
